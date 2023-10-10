@@ -1,0 +1,2 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"/mnt/LinuxData/Projects/StoryForgeEngine-mono/StoryForgeEngine/Content/2D/sleezebag.png","/mnt/LinuxData/Projects/StoryForgeEngine-mono/StoryForgeEngine/Content/bin/DesktopGL/2D/sleezebag.xnb","TextureProcessor","Texture2DContent",745,16469,0.177885
