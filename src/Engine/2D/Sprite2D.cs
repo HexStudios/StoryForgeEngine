@@ -7,6 +7,8 @@ namespace StoryForgeEngine
     public class Sprite2D : Behavior
     {
 
+        protected bool HasGravity = false;
+
         private Vector2 _position, _dimensions;
         private float _rotation;
         private Color _color = Color.White;
@@ -58,6 +60,8 @@ namespace StoryForgeEngine
             Position = position;
             Rotation = rotation;
             Dimensions = dimensions;
+
+            Name = _texture.Name;
         }
 
         public Rectangle Rect
@@ -68,6 +72,7 @@ namespace StoryForgeEngine
                 {
                     return new Rectangle((int)_position.X, (int)_position.Y, _texture.Width, _texture.Height);
                 }
+                
                 throw new Exception($"No texture found.");
             }
         }

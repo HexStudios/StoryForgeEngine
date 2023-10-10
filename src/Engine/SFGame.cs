@@ -11,6 +11,8 @@ namespace StoryForgeEngine
         protected string _name;
         protected List<Behavior> _behaviors;
 
+        public Behavior Behaviors {get; private set;}
+
         public SFGame(string name)
         {
             _name = name;
@@ -46,7 +48,7 @@ namespace StoryForgeEngine
             }
         }
 
-        protected void AddBehavior(Behavior behavior)
+        protected void AddToGame(Behavior behavior)
         {
             if (behavior == null)
             {
@@ -56,7 +58,7 @@ namespace StoryForgeEngine
             behavior.Initialize();
         }
 
-        protected void RemoveBehavior(Behavior behavior)
+        protected void RemoveFromGame(Behavior behavior)
         {
             if (_behaviors.Count != 0 && _behaviors.Contains(behavior))
             {
@@ -64,7 +66,7 @@ namespace StoryForgeEngine
             }
             else 
             {
-                throw new Exception($"Cannot remove {behavior} from list as it does not exist.");
+                SFEngine.PrintError($"Trying to remove a {behavior}({behavior.Name}) from {_name} Behaviors List that does not exist.");
             }
         }
     }

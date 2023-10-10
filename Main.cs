@@ -38,7 +38,7 @@ public class Game1 : Game
             Exit();
 
         game.Update(gameTime);
-
+        EngineGlobals.GlobalInputManager.Update(gameTime);
         base.Update(gameTime);
     }
 
