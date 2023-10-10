@@ -12,7 +12,7 @@
             "program": "${workspaceFolder}/bin/Debug/net6.0/StoryForgeEngine.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
-            "console": "integratedTerminal",
+            "console": "externalTerminal",
             "stopAtEntry": false
         },
         {

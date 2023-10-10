@@ -18,18 +18,21 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        
-        base.Initialize();
-    }
-
-    protected override void LoadContent()
-    {
         EngineGlobals.GlobalSpriteBatch = new SpriteBatch(GraphicsDevice);
         EngineGlobals.GlobalContentManager = this.Content;
         EngineGlobals.GlobalInputManager = new Input();
 
         game = new MySFGame("MySFGame");
+        EngineGlobals.CurrentGame = game;
+
         game.Initialize();
+
+        base.Initialize();
+    }
+
+    protected override void LoadContent()
+    {
+        
     }
 
     protected override void Update(GameTime gameTime)

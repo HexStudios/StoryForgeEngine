@@ -8,6 +8,6 @@ namespace StoryForgeEngine
         public static SpriteBatch GlobalSpriteBatch;
         public static ContentManager GlobalContentManager;
         public static Input GlobalInputManager;
-        public static SFGame game;
+        public static SFGame CurrentGame;
     }
 }

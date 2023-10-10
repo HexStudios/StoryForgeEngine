@@ -4,35 +4,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace StoryForgeEngine
 {
-    public class Sprite2D : Behavior
+    public class Sprite2D : Entity
     {
-
-        protected bool HasGravity = false;
-
-        private Vector2 _position, _dimensions;
-        private float _rotation;
-        private Color _color = Color.White;
-        private Texture2D _texture;
-        public Texture2D Texture
-        {
-            get => _texture;
-            set => _texture = value;
-        }
-        public float Rotation
-        {
-            get => _rotation;
-            set => _rotation = value;
-        }
-        public Vector2 Position
-        {
-            get => _position;
-            set => _position = value;
-        }
-        public Vector2 Dimensions
-        {
-            get => _dimensions;
-            set => _dimensions = value;
-        }
+        public bool HasGravity = false;
+        public Collision.Layers CollisionLayer = Collision.Layers.Default;
+        public Vector2 Position, Dimensions, Velocity;
+        public float Rotation;
+        public Color Color = Color.White;
+        public Texture2D Texture;
 
         public override void Initialize()
         {
@@ -46,35 +25,70 @@ namespace StoryForgeEngine
 
         public override void Draw(GameTime gameTime)
         {
-            if (_texture != null)
+            if (Texture != null)
             {
-                EngineGlobals.GlobalSpriteBatch.Draw(_texture, Rect, null, _color, _rotation, new Vector2(_texture.Bounds.Width/2, _texture.Bounds.Height/2), new SpriteEffects(), 0);
+                EngineGlobals.GlobalSpriteBatch.Draw(Texture, Rect, null, Color, Rotation, new Vector2(Texture.Bounds.Width/2, Texture.Bounds.Height/2), new SpriteEffects(), 0);
             }
             base.Draw(gameTime);
         }
 
         public Sprite2D(string texturePath, Vector2 position, float rotation, Vector2 dimensions)
         {
-            _texture = EngineGlobals.GlobalContentManager.Load<Texture2D>(texturePath);
+            Texture = EngineGlobals.GlobalContentManager.Load<Texture2D>(texturePath);
 
             Position = position;
             Rotation = rotation;
             Dimensions = dimensions;
 
-            Name = _texture.Name;
+            Name = Texture.Name;
         }
 
         public Rectangle Rect
         {
             get 
             {
-                if (_texture != null)
+                if (Texture != null)
                 {
-                    return new Rectangle((int)_position.X, (int)_position.Y, _texture.Width, _texture.Height);
+                    return new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
                 }
-                
+
                 throw new Exception($"No texture found.");
             }
+        }
+
+        // COLLISION
+        public bool IsCollidingLeft(Sprite2D sprite)
+        {
+            return this.Rect.Right + this.Velocity.X > sprite.Rect.Left &&
+                    this.Rect.Left < sprite.Rect.Left &&
+                    this.Rect.Bottom > sprite.Rect.Top &&
+                    this.Rect.Top < sprite.Rect.Bottom;
+        }
+        public bool IsCollidingRight(Sprite2D sprite)
+        {
+            return this.Rect.Left + this.Velocity.X < sprite.Rect.Right &&
+                    this.Rect.Right > sprite.Rect.Right &&
+                    this.Rect.Bottom > sprite.Rect.Top &&
+                    this.Rect.Top < sprite.Rect.Bottom;
+        }
+        public bool IsCollidingTop(Sprite2D sprite)
+        {
+            return this.Rect.Bottom + this.Velocity.Y > sprite.Rect.Top &&
+                    this.Rect.Top < sprite.Rect.Top &&
+                    this.Rect.Right > sprite.Rect.Left &&
+                    this.Rect.Left < sprite.Rect.Right;
+        }
+        public bool IsCollidingBottom(Sprite2D sprite)
+        {
+            return this.Rect.Top + this.Velocity.Y < sprite.Rect.Bottom &&
+                    this.Rect.Bottom > sprite.Rect.Bottom &&
+                    this.Rect.Right > sprite.Rect.Left &&
+                    this.Rect.Left < sprite.Rect.Right;
+        }
+
+        public bool IsColliding(Sprite2D sprite)
+        {
+            return IsCollidingLeft(sprite) || IsCollidingRight(sprite) || IsCollidingTop(sprite) || IsCollidingBottom(sprite);
         }
     }
 }

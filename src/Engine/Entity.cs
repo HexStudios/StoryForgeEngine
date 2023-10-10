@@ -3,11 +3,11 @@ using Microsoft.Xna.Framework;
 
 namespace StoryForgeEngine
 {
-    public class Behavior
+    public class Entity
     {
 
         public string Name;
-        public Behavior()
+        public Entity()
         {
         }
 

@@ -9,15 +9,15 @@ namespace StoryForgeEngine
     public class SFGame
     {
         protected string _name;
-        protected List<Behavior> _behaviors;
+        public List<Entity> Entities;
 
-        public Behavior Behaviors {get; private set;}
+        public List<string> CollisionLayers;
 
         public SFGame(string name)
         {
             _name = name;
 
-            _behaviors = new List<Behavior>();
+            Entities = new List<Entity>();
         }
 
         public virtual void Initialize()
@@ -26,11 +26,11 @@ namespace StoryForgeEngine
 
         public virtual void Update(GameTime gameTime)
         {
-            if (_behaviors is null || _behaviors.Count == 0)
+            if (Entities is null || Entities.Count == 0)
             {
                 return;
             }
-            foreach (Behavior behavior in _behaviors)
+            foreach (Entity behavior in Entities)
             {
                 behavior.Update(gameTime);
             }
@@ -38,35 +38,35 @@ namespace StoryForgeEngine
 
         public virtual void Draw(GameTime gameTime)
         {
-            if (_behaviors is null || _behaviors.Count == 0)
+            if (Entities is null || Entities.Count == 0)
             {
                 return;
             }
-            foreach (Behavior behavior in _behaviors)
+            foreach (Entity behavior in Entities)
             {
                 behavior.Draw(gameTime);
             }
         }
 
-        protected void AddToGame(Behavior behavior)
+        public void AddEntity(Entity behavior)
         {
             if (behavior == null)
             {
-                throw new Exception("Cannot add a null behaviour");
+                throw new Exception("Cannot add a null Entity");
             }
-            _behaviors.Add(behavior);
+            Entities.Add(behavior);
             behavior.Initialize();
         }
 
-        protected void RemoveFromGame(Behavior behavior)
+        public void RemoveEntity(Entity entity)
         {
-            if (_behaviors.Count != 0 && _behaviors.Contains(behavior))
+            if (Entities.Count != 0 && Entities.Contains(entity))
             {
-                _behaviors.Remove(behavior);
+                Entities.Remove(entity);
             }
             else 
             {
-                SFEngine.PrintError($"Trying to remove a {behavior}({behavior.Name}) from {_name} Behaviors List that does not exist.");
+                SFEngine.PrintError($"Trying to remove a {entity}({entity.Name}) from {_name} Entity List that does not exist.");
             }
         }
     }
