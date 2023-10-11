@@ -60,15 +60,13 @@ namespace StoryForgeEngine
                 if (sprite.CollisionLayer == Collision.Layers.Floor)
                 {
                     if (Velocity.X > 0 && IsCollidingLeft(sprite) || Velocity.X < 0 && IsCollidingRight(sprite))
-                {
-                    SFEngine.Print($"Colliding with {sprite.Name} on layer {sprite.CollisionLayer}", System.ConsoleColor.Green);
-                    Velocity.X = 0;
-                }
-                if (Velocity.Y > 0 && IsCollidingTop(sprite) || Velocity.Y < 0 && IsCollidingBottom(sprite))
-                {
-                    SFEngine.Print($"Colliding with {sprite.Name} on layer {sprite.CollisionLayer}", System.ConsoleColor.Green);
-                    Velocity.Y = 0;
-                }
+                    {
+                        Velocity.X = 0;
+                    }
+                    if (Velocity.Y > 0 && IsCollidingTop(sprite) || Velocity.Y < 0 && IsCollidingBottom(sprite))
+                    {
+                        Velocity.Y = 0;
+                    }
                 }
             }
             
